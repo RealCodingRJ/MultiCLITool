@@ -4,6 +4,12 @@
 #include <tuple>
 #include <thread>
 #include <chrono>
+#include <type_traits>
+#include <time.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+using namespace std;
 
 struct Colors {
 
@@ -43,6 +49,11 @@ constexpr int resultx(int a) {
 	return a;
 }
 
+template <typename T> requires is_integral_v<T> void print(T value) {
+
+
+	std::cout << "Value: " << value << "\n";
+}
 
 struct SetName {
 
@@ -88,9 +99,25 @@ struct Timer {
 		return 60 * a;
 	}
 
+};
+
+struct Functions {
+
+	int num1 = 0;
+	int num2 = 0;
+
+	int getNumbersOne(int a) {
+		return this->num1 = a;
+	}
+
+	int getNumberTwo(int a) {
+		return this->num2 = a;
+	}
+
 
 
 };
+
 
 bool isSignedin = false;
 bool isTimerSet = false;
@@ -98,6 +125,10 @@ bool isTimerSet = false;
 
 int main() {
 
+	auto add = [](auto a, auto b) { return a + b; };
+	auto sub = [](auto a, auto b) { return a - b; };
+	auto mul = [](auto a, auto b) { return a * b; };
+	auto div = [](auto a, auto b) { return a / b; };
 
 
 	SetName n;
@@ -120,6 +151,7 @@ int main() {
 
 				i += 1;
 			
+
 				std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 				//std::thread t;
 				//t.join();
@@ -136,6 +168,24 @@ int main() {
 
 
 			}
+
+			if (c.command == "/Math") {
+			
+				srand(time(0));
+
+				int num1 = rand() % 10 + 1;
+				int num2 = rand() % 10 + 1;
+
+				Functions f;
+				auto numbers = add(2, 2);
+					
+				num1 = f.getNumbersOne(num1);
+				num2 = f.getNumberTwo(num2);
+
+
+
+			}
+			print(1337);
 
 
 		}
